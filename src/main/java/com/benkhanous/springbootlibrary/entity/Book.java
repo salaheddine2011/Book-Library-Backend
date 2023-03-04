@@ -1,17 +1,21 @@
 package com.benkhanous.springbootlibrary.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import javax.persistence.*;
+
 @Entity
 @Table(name = "book")
 @Data
 public class Book {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "title")
     private String title;
+
     @Column(name = "author")
     private String author;
 
@@ -21,7 +25,7 @@ public class Book {
     @Column(name = "copies")
     private int copies;
 
-    @Column(name = "copiesAvailable")
+    @Column(name = "copies_available")
     private int copiesAvailable;
 
     @Column(name = "category")
