@@ -14,13 +14,13 @@ import java.time.LocalDate;
 @Service
 @Transactional
 public class ReviewService {
-    private BookRepository bookRepository;
+
     private ReviewRepository reviewRepository;
 
 
     @Autowired
     public ReviewService(BookRepository bookRepository, ReviewRepository reviewRepository) {
-        this.bookRepository = bookRepository;
+
         this.reviewRepository = reviewRepository;
     }
 
@@ -38,5 +38,15 @@ public class ReviewService {
         review.setReviewDescription(reviewRequest.getReviewDescription().map(
                 Object::toString
         ).orElse(null));
+        reviewRepository.save(review);
+    }
+
+    public boolean userReviewListed(String userEmail,Long bookId){
+        Review validateReview=reviewRepository.findByUserEmailAndBookId(userEmail,bookId);
+        if(validateReview!=null){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
