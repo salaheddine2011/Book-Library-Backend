@@ -24,7 +24,7 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public void postRequest(String userEmail, ReviewRequest reviewRequest) throws Exception {
+    public void postReview(String userEmail, ReviewRequest reviewRequest) throws Exception {
         Review validateReview=reviewRepository.findByUserEmailAndBookId(userEmail,reviewRequest.getBookId());
         if(validateReview !=null){
             throw new Exception("Review already created");
