@@ -17,9 +17,9 @@ public class MessageService {
         this.messageRepository=messageRepository;
     }
 
-    public void postMessage(Message messageRequest,String userEamil){
+    public void postMessage(Message messageRequest,String userEmail){
         Message message=new Message(messageRequest.getTitle(),messageRequest.getQuestion());
-        message.setUserEmail(userEamil);
+        message.setUserEmail(userEmail);
         messageRepository.save(message);
     }
 }
