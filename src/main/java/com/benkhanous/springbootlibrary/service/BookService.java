@@ -25,9 +25,10 @@ public class BookService {
 
     private HistoryRepository historyRepository;
 
-    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository) {
+    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository,HistoryRepository historyRepository) {
         this.bookRepository = bookRepository;
         this.checkoutRepository = checkoutRepository;
+        this.historyRepository=historyRepository;
     }
 
     public Book checkoutBook(String userEmail, Long bookid) throws Exception {
@@ -101,6 +102,7 @@ public class BookService {
                 book.get().getImg()
         );
         historyRepository.save(history);
+
     }
     public void renewLoan(String userEmail,Long bookId) throws Exception {
         Checkout validateCheckout=checkoutRepository.findByUserEmailAndBookId(userEmail,bookId);
