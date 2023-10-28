@@ -21,10 +21,19 @@ public class AdminController {
     @PostMapping("/secure/add/book")
     public void postBook(@RequestHeader(value = "Authorization") String token,@RequestBody AddBookRequest addBookRequest) throws Exception
     {
-        String admin= ExtractJWT.payloadJWTExtraction(token,"\"userType \"");
+        String admin= ExtractJWT.payloadJWTExtraction(token,"\"userType\"");
         if(admin==null || !admin.equals("admin")){
             throw new Exception("Administration page only");
         }
         adminService.postBook(addBookRequest);
+    }
+
+    @PutMapping("/secure/increase/book/quantity")
+    public void increaseBookQuantity(@RequestHeader(value="Authorization") String token,@RequestParam Long bookId) throws Exception {
+        String admin= ExtractJWT.payloadJWTExtraction(token,"\"userType\"");
+        if(admin==null || !admin.equals("admin")){
+            throw new Exception("Admnistration page only");
+        }
+        adminService.increaseBookQuantity(bookId);
     }
 }
