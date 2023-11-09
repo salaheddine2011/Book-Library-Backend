@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import utils.ExtractJWT;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("https://localhost:3000")
 @RestController
 @RequestMapping("api/admin")
 public class AdminController {
@@ -47,7 +47,7 @@ public class AdminController {
     }
     @DeleteMapping("secure/delete/book")
     public void deleteBook(@RequestHeader(value = "Authorization") String token,@RequestParam Long bookId) throws Exception{
-        String admin=ExtractJWT.payloadJWTExtraction(toke,"\"userType\"");
+        String admin=ExtractJWT.payloadJWTExtraction(token,"\"userType\"");
         if(admin == null || !admin.equals("admin")){
             throw new Exception("Administration Page only ");
         }
