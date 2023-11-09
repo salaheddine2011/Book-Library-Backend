@@ -1,7 +1,10 @@
 package com.benkhanous.springbootlibrary.service;
 
 import com.benkhanous.springbootlibrary.dao.BookRepository;
+import com.benkhanous.springbootlibrary.dao.CheckoutRepository;
+import com.benkhanous.springbootlibrary.dao.ReviewRepository;
 import com.benkhanous.springbootlibrary.entity.Book;
+import com.benkhanous.springbootlibrary.entity.Checkout;
 import com.benkhanous.springbootlibrary.requestmodels.AddBookRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +18,14 @@ import java.util.Optional;
 public class AdminService {
 
     private BookRepository bookRepository;
+    private CheckoutRepository checkoutRepository;
+
+    private ReviewRepository reviewRepository;
     @Autowired
-    public AdminService(BookRepository bookRepository){
+    public AdminService(BookRepository bookRepository,ReviewRepository reviewRepository,CheckoutRepository checkoutRepository){
         this.bookRepository=bookRepository;
+        this.checkoutRepository=checkoutRepository;
+        this.reviewRepository=reviewRepository;
     }
 
 
@@ -39,6 +47,17 @@ public class AdminService {
         book.get().setCopies(book.get().getCopies()-1);
         book.get().setCopiesAvailable(book.get().getCopiesAvailable()-1);
         bookRepository.save(book.get());
+    }
+
+    public void deleteBookService(Long bookId) throws Exception{
+        // darouri
+        Optional<Book> book=bookRepository.findById(bookId);
+        if(!book.isPresent()){
+            throw new Exception("Book not Found");
+        }
+        bookRepository.delete(book.get());
+        checkoutRepository.deleteAllByBookId(bookId);
+        reviewRepository.deleteAllByBookId(bookId);
     }
 
     public void postBook(AddBookRequest addBookRequest){
